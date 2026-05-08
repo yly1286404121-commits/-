@@ -1,121 +1,104 @@
 <!doctype html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>今晚吃什么</title>
+  <title>Weekend Atlas</title>
   <link rel="stylesheet" href="./styles.css">
 </head>
 <body>
-  <main class="app">
+  <main class="shell">
     <header class="topbar">
-      <a class="brand" href="#" aria-label="今晚吃什么首页">
-        <span class="brand-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none">
-            <path d="M4 3v8M8 3v8M6 3v18M14 3v7a4 4 0 0 0 4 4h2M18 14v7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </span>
+      <a class="brand" href="#" aria-label="Weekend Atlas home">
+        <span class="brand-mark" aria-hidden="true">WA</span>
         <span>
-          <strong>今晚吃什么</strong>
-          <small>家庭晚餐点单</small>
+          <strong>Weekend Atlas</strong>
+          <small>Plan a sharper two-day escape</small>
         </span>
       </a>
 
-      <div class="top-actions">
-        <button class="ghost-button" id="randomButton" type="button">
-          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <path d="M16 3h5v5M4 20 21 3M21 16v5h-5M15 15l6 6M4 4l5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-          随机配餐
-        </button>
-      </div>
+      <nav class="nav" aria-label="Primary">
+        <a href="#places">Places</a>
+        <a href="#plan">Plan</a>
+      </nav>
     </header>
 
-    <section class="hero">
-      <div class="hero-content">
-        <p class="eyebrow">DINNER IS READY</p>
-        <h1>今晚，吃点认真做的饭。</h1>
-        <p class="hero-copy">从热菜、轻食到主食，一页选好晚餐组合，预算和人数自动算清楚。</p>
+    <section class="hero" aria-labelledby="heroTitle">
+      <div class="hero-copy">
+        <p class="eyebrow">City breaks, made compact</p>
+        <h1 id="heroTitle">Build a weekend that feels bigger than the calendar.</h1>
+        <p>
+          Pick a mood, tune your budget, and collect a short list of places for a
+          two-day trip that is walkable, memorable, and easy to book.
+        </p>
       </div>
 
-      <form class="meal-panel" id="mealForm">
+      <form class="planner" id="plannerForm">
         <label>
-          <span>用餐人数</span>
-          <input id="peopleInput" type="number" min="1" max="12" value="2">
-        </label>
-        <label>
-          <span>开饭时间</span>
-          <input id="timeInput" type="time" value="19:00">
-        </label>
-        <label>
-          <span>口味偏好</span>
-          <select id="tasteInput">
-            <option value="balanced">均衡</option>
-            <option value="spicy">想吃辣</option>
-            <option value="light">清淡点</option>
-            <option value="protein">多点肉</option>
+          <span>Travel mood</span>
+          <select id="moodInput">
+            <option value="all">Surprise me</option>
+            <option value="food">Food first</option>
+            <option value="art">Art and design</option>
+            <option value="nature">Outdoor reset</option>
           </select>
         </label>
+        <label>
+          <span>Budget per day</span>
+          <input id="budgetInput" type="range" min="80" max="320" step="20" value="180">
+        </label>
+        <div class="budget-readout">
+          <span>Target</span>
+          <strong id="budgetLabel">$180</strong>
+        </div>
+        <button class="primary-action" id="suggestButton" type="button">Suggest a route</button>
       </form>
     </section>
 
-    <section class="stats" aria-label="晚餐概览">
+    <section class="metrics" aria-label="Trip overview">
       <article>
-        <span>已选菜品</span>
-        <strong id="dishCount">0</strong>
+        <span>Saved stops</span>
+        <strong id="savedCount">0</strong>
       </article>
       <article>
-        <span>预计制作</span>
-        <strong id="cookTime">0 分钟</strong>
+        <span>Daily estimate</span>
+        <strong id="dailyEstimate">$0</strong>
       </article>
       <article>
-        <span>人均预算</span>
-        <strong id="perPerson">￥0</strong>
+        <span>Walking time</span>
+        <strong id="walkTime">0 min</strong>
       </article>
     </section>
 
-    <div class="workspace">
-      <section class="menu-section">
+    <div class="content-grid">
+      <section class="places" id="places" aria-labelledby="placesTitle">
         <div class="section-heading">
           <div>
-            <p class="eyebrow">MENU</p>
-            <h2>今晚菜单</h2>
+            <p class="eyebrow">Browse</p>
+            <h2 id="placesTitle">Weekend-ready ideas</h2>
           </div>
-          <div class="filters" aria-label="菜品筛选">
-            <button class="filter is-active" type="button" data-filter="all">全部</button>
-            <button class="filter" type="button" data-filter="hot">热菜</button>
-            <button class="filter" type="button" data-filter="fresh">清爽</button>
-            <button class="filter" type="button" data-filter="main">主食</button>
+          <div class="filters" aria-label="Place filters">
+            <button class="filter is-active" type="button" data-filter="all">All</button>
+            <button class="filter" type="button" data-filter="food">Food</button>
+            <button class="filter" type="button" data-filter="art">Art</button>
+            <button class="filter" type="button" data-filter="nature">Nature</button>
           </div>
         </div>
 
-        <div class="dish-grid" id="dishGrid"></div>
+        <div class="place-grid" id="placeGrid"></div>
       </section>
 
-      <aside class="cart">
-        <div class="section-heading">
+      <aside class="plan" id="plan" aria-labelledby="planTitle">
+        <div class="section-heading compact">
           <div>
-            <p class="eyebrow">TABLE</p>
-            <h2>我的饭桌</h2>
+            <p class="eyebrow">Your plan</p>
+            <h2 id="planTitle">Two-day shortlist</h2>
           </div>
         </div>
-
-        <div class="cart-meta" id="cartMeta">2 人 · 19:00 开饭 · 均衡</div>
-        <div class="cart-list" id="cartList"></div>
-
-        <div class="cart-total">
-          <span>合计</span>
-          <strong id="totalPrice">￥0</strong>
-        </div>
-
-        <button class="primary-button" id="checkoutButton" type="button">
-          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <path d="M5 12h14M13 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-          开饭
-        </button>
-
-        <p class="notice" id="notice" aria-live="polite"></p>
+        <p class="plan-meta" id="planMeta">Choose a mood to start.</p>
+        <div class="saved-list" id="savedList"></div>
+        <button class="secondary-action" id="clearButton" type="button">Clear plan</button>
+        <p class="status" id="statusMessage" aria-live="polite"></p>
       </aside>
     </div>
   </main>

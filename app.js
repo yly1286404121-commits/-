@@ -1,190 +1,185 @@
-const dishes = [
+const places = [
   {
-    id: "beef",
-    name: "黑椒牛肉粒",
-    category: "hot",
-    tags: ["protein", "balanced"],
-    label: "下饭热菜",
-    desc: "牛肉煎到焦香，配彩椒和洋葱，适合米饭党。",
-    price: 58,
-    minutes: 18,
-    photo: "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=900&q=80"
+    id: "market",
+    name: "Morning Market Crawl",
+    category: "food",
+    cost: 46,
+    walk: 28,
+    tag: "Breakfast to lunch",
+    description: "Start with pastries, wander produce stalls, then end with a counter-seat lunch nearby.",
+    photo: "https://images.unsplash.com/photo-1488459716781-31db52582fe9?auto=format&fit=crop&w=900&q=80"
   },
   {
-    id: "fish",
-    name: "番茄酸汤鱼",
-    category: "hot",
-    tags: ["spicy", "balanced"],
-    label: "酸香暖胃",
-    desc: "酸甜汤底配嫩鱼片，天气微凉时很会哄人。",
-    price: 66,
-    minutes: 22,
-    photo: "https://images.unsplash.com/photo-1569058242253-92a9c755a0ec?auto=format&fit=crop&w=900&q=80"
+    id: "gallery",
+    name: "Warehouse Gallery Loop",
+    category: "art",
+    cost: 34,
+    walk: 42,
+    tag: "Design district",
+    description: "Three small galleries, a bookshop, and a late-afternoon cafe with room to sketch or read.",
+    photo: "https://images.unsplash.com/photo-1531058020387-3be344556be6?auto=format&fit=crop&w=900&q=80"
   },
   {
-    id: "salad",
-    name: "青柠虾仁沙拉",
-    category: "fresh",
-    tags: ["light", "protein"],
-    label: "清爽",
-    desc: "虾仁、牛油果、青柠汁，给晚餐留一点轻盈。",
-    price: 42,
-    minutes: 12,
-    photo: "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=900&q=80"
+    id: "garden",
+    name: "Botanical Glasshouse",
+    category: "nature",
+    cost: 28,
+    walk: 35,
+    tag: "Slow reset",
+    description: "A quiet green stop with shaded paths, humid rooms, and a good bench-to-view ratio.",
+    photo: "https://images.unsplash.com/photo-1459156212016-c812468e2115?auto=format&fit=crop&w=900&q=80"
   },
   {
     id: "noodle",
-    name: "葱油拌面",
-    category: "main",
-    tags: ["balanced"],
-    label: "主食",
-    desc: "葱香酱汁裹住细面，简单但很难不加第二份。",
-    price: 24,
-    minutes: 10,
-    photo: "https://images.unsplash.com/photo-1552611052-33e04de081de?auto=format&fit=crop&w=900&q=80"
+    name: "Tiny Noodle Bar",
+    category: "food",
+    cost: 38,
+    walk: 16,
+    tag: "Dinner anchor",
+    description: "A compact dinner plan that leaves enough budget for dessert and a second neighborhood walk.",
+    photo: "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?auto=format&fit=crop&w=900&q=80"
   },
   {
-    id: "tofu",
-    name: "家常豆腐煲",
-    category: "hot",
-    tags: ["light", "balanced"],
-    label: "素也满足",
-    desc: "外焦里嫩的豆腐吸满酱汁，和米饭很合拍。",
-    price: 36,
-    minutes: 15,
-    photo: "https://images.unsplash.com/photo-1512058564366-18510be2db19?auto=format&fit=crop&w=900&q=80"
+    id: "museum",
+    name: "Modern Museum Morning",
+    category: "art",
+    cost: 52,
+    walk: 24,
+    tag: "Big ticket",
+    description: "Reserve the first entry slot, then keep the afternoon open for a slower nearby lunch.",
+    photo: "https://images.unsplash.com/photo-1564399579883-451a5d44ec08?auto=format&fit=crop&w=900&q=80"
   },
   {
-    id: "rice",
-    name: "菌菇鸡肉焖饭",
-    category: "main",
-    tags: ["protein", "balanced"],
-    label: "一锅香",
-    desc: "米粒吸进鸡肉和菌菇的香气，适合凑一份主食。",
-    price: 32,
-    minutes: 20,
-    photo: "https://images.unsplash.com/photo-1516684669134-de6f7c473a2a?auto=format&fit=crop&w=900&q=80"
+    id: "ridge",
+    name: "Sunset Ridge Walk",
+    category: "nature",
+    cost: 22,
+    walk: 58,
+    tag: "Golden hour",
+    description: "Pack a light snack, reach the overlook before sunset, and take the gentler route down.",
+    photo: "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=900&q=80"
   }
 ];
 
-const cart = new Map();
+const saved = new Map();
 let currentFilter = "all";
 
-const dishGrid = document.querySelector("#dishGrid");
-const cartList = document.querySelector("#cartList");
-const dishCount = document.querySelector("#dishCount");
-const cookTime = document.querySelector("#cookTime");
-const perPerson = document.querySelector("#perPerson");
-const totalPrice = document.querySelector("#totalPrice");
-const peopleInput = document.querySelector("#peopleInput");
-const timeInput = document.querySelector("#timeInput");
-const tasteInput = document.querySelector("#tasteInput");
-const cartMeta = document.querySelector("#cartMeta");
-const notice = document.querySelector("#notice");
+const placeGrid = document.querySelector("#placeGrid");
+const savedList = document.querySelector("#savedList");
+const savedCount = document.querySelector("#savedCount");
+const dailyEstimate = document.querySelector("#dailyEstimate");
+const walkTime = document.querySelector("#walkTime");
+const budgetInput = document.querySelector("#budgetInput");
+const budgetLabel = document.querySelector("#budgetLabel");
+const moodInput = document.querySelector("#moodInput");
+const planMeta = document.querySelector("#planMeta");
+const statusMessage = document.querySelector("#statusMessage");
 
-function money(value) {
-  return `￥${Math.round(value)}`;
+function formatMoney(value) {
+  return `$${Math.round(value)}`;
 }
 
-function getVisibleDishes() {
+function visiblePlaces() {
   return currentFilter === "all"
-    ? dishes
-    : dishes.filter((dish) => dish.category === currentFilter);
+    ? places
+    : places.filter((place) => place.category === currentFilter);
 }
 
-function renderDishes() {
-  dishGrid.innerHTML = getVisibleDishes().map((dish) => `
-    <article class="dish-card">
-      <div class="dish-photo" style="--photo: url('${dish.photo}')">
-        <span class="dish-tag">${dish.label}</span>
-      </div>
-      <div class="dish-body">
-        <div class="dish-title">
-          <h3>${dish.name}</h3>
-          <span class="price">${money(dish.price)}</span>
+function renderPlaces() {
+  placeGrid.innerHTML = visiblePlaces().map((place) => {
+    const isSaved = saved.has(place.id);
+
+    return `
+      <article class="place-card">
+        <div class="place-photo" style="--photo: url('${place.photo}')"></div>
+        <div class="place-body">
+          <div class="place-title">
+            <h3>${place.name}</h3>
+            <span class="price">${formatMoney(place.cost)}</span>
+          </div>
+          <span class="place-meta">${place.tag} / ${place.walk} min walk</span>
+          <p>${place.description}</p>
+          <div class="place-footer">
+            <span class="place-meta">${place.category}</span>
+            <button class="save-button ${isSaved ? "is-saved" : ""}" type="button" data-save="${place.id}">
+              ${isSaved ? "Saved" : "Save"}
+            </button>
+          </div>
         </div>
-        <p>${dish.desc}</p>
-        <div class="dish-footer">
-          <span class="dish-time">${dish.minutes} 分钟</span>
-          <button class="dish-add" type="button" data-add="${dish.id}" aria-label="添加 ${dish.name}" title="添加 ${dish.name}">
-            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-            </svg>
-          </button>
-        </div>
-      </div>
-    </article>
-  `).join("");
+      </article>
+    `;
+  }).join("");
 }
 
-function renderCart() {
-  const items = [...cart.values()];
-  const people = Math.max(Number(peopleInput.value) || 1, 1);
-  const total = items.reduce((sum, item) => sum + item.price * item.qty, 0);
-  const count = items.reduce((sum, item) => sum + item.qty, 0);
-  const longestCook = items.reduce((max, item) => Math.max(max, item.minutes), 0);
-  const tasteText = tasteInput.options[tasteInput.selectedIndex].text;
+function renderPlan() {
+  const items = [...saved.values()];
+  const totalCost = items.reduce((sum, place) => sum + place.cost, 0);
+  const totalWalk = items.reduce((sum, place) => sum + place.walk, 0);
+  const budget = Number(budgetInput.value);
+  const moodLabel = moodInput.options[moodInput.selectedIndex].text;
+  const remaining = budget - totalCost;
 
-  dishCount.textContent = count;
-  cookTime.textContent = `${longestCook} 分钟`;
-  perPerson.textContent = money(total / people);
-  totalPrice.textContent = money(total);
-  cartMeta.textContent = `${people} 人 · ${timeInput.value || "19:00"} 开饭 · ${tasteText}`;
+  budgetLabel.textContent = formatMoney(budget);
+  savedCount.textContent = items.length;
+  dailyEstimate.textContent = formatMoney(totalCost);
+  walkTime.textContent = `${totalWalk} min`;
+  planMeta.textContent = `${moodLabel} / ${formatMoney(Math.max(remaining, 0))} budget room`;
 
-  cartList.innerHTML = items.length
-    ? items.map((item) => `
-      <div class="cart-item">
+  savedList.innerHTML = items.length
+    ? items.map((place) => `
+      <div class="saved-item">
         <div>
-          <strong>${item.name}</strong>
-          <small>${money(item.price)} · ${item.minutes} 分钟</small>
+          <strong>${place.name}</strong>
+          <small>${formatMoney(place.cost)} / ${place.walk} min walk</small>
         </div>
-        <div class="qty">
-          <button class="qty-button" type="button" data-minus="${item.id}" aria-label="减少 ${item.name}">-</button>
-          <span>${item.qty}</span>
-          <button class="qty-button" type="button" data-add="${item.id}" aria-label="增加 ${item.name}">+</button>
-        </div>
+        <button class="remove-button" type="button" data-remove="${place.id}" aria-label="Remove ${place.name}">x</button>
       </div>
     `).join("")
-    : `<div class="empty-cart">饭桌还是空的</div>`;
-}
+    : `<div class="empty-state">Save a few stops to shape the weekend.</div>`;
 
-function addDish(id) {
-  const dish = dishes.find((item) => item.id === id);
-  if (!dish) return;
-
-  const current = cart.get(id);
-  cart.set(id, { ...dish, qty: current ? current.qty + 1 : 1 });
-  notice.textContent = `${dish.name} 已加入饭桌`;
-  renderCart();
-}
-
-function removeDish(id) {
-  const current = cart.get(id);
-  if (!current) return;
-
-  if (current.qty === 1) {
-    cart.delete(id);
+  if (!items.length) {
+    statusMessage.textContent = "";
+  } else if (totalCost > budget) {
+    statusMessage.textContent = "This route is over budget. Trim one stop or lift the target.";
   } else {
-    cart.set(id, { ...current, qty: current.qty - 1 });
+    statusMessage.textContent = "Nice fit. This route stays inside your target.";
+  }
+}
+
+function toggleSaved(id) {
+  const place = places.find((item) => item.id === id);
+  if (!place) return;
+
+  if (saved.has(id)) {
+    saved.delete(id);
+  } else {
+    saved.set(id, place);
   }
 
-  notice.textContent = "";
-  renderCart();
+  renderPlaces();
+  renderPlan();
 }
 
-function setRandomMeal() {
-  cart.clear();
-  const taste = tasteInput.value;
-  const matched = dishes.filter((dish) => dish.tags.includes(taste));
-  const pool = matched.length >= 3 ? matched : dishes;
-  const shuffled = [...pool].sort(() => Math.random() - 0.5);
+function suggestRoute() {
+  const mood = moodInput.value;
+  const budget = Number(budgetInput.value);
+  const pool = mood === "all" ? places : places.filter((place) => place.category === mood);
 
-  shuffled.slice(0, 3).forEach((dish) => {
-    cart.set(dish.id, { ...dish, qty: 1 });
-  });
+  saved.clear();
+  pool
+    .slice()
+    .sort((a, b) => a.cost - b.cost)
+    .some((place) => {
+      const currentTotal = [...saved.values()].reduce((sum, item) => sum + item.cost, 0);
+      if (currentTotal + place.cost <= budget || saved.size < 2) {
+        saved.set(place.id, place);
+      }
+      return saved.size >= 3;
+    });
 
-  notice.textContent = "已经配好一桌";
-  renderCart();
+  statusMessage.textContent = "Suggested a compact route from your current settings.";
+  renderPlaces();
+  renderPlan();
 }
 
 document.querySelector(".filters").addEventListener("click", (event) => {
@@ -195,27 +190,26 @@ document.querySelector(".filters").addEventListener("click", (event) => {
   document.querySelectorAll(".filter").forEach((item) => {
     item.classList.toggle("is-active", item === button);
   });
-  renderDishes();
+  renderPlaces();
 });
 
 document.addEventListener("click", (event) => {
-  const addButton = event.target.closest("[data-add]");
-  const minusButton = event.target.closest("[data-minus]");
+  const saveButton = event.target.closest("[data-save]");
+  const removeButton = event.target.closest("[data-remove]");
 
-  if (addButton) addDish(addButton.dataset.add);
-  if (minusButton) removeDish(minusButton.dataset.minus);
+  if (saveButton) toggleSaved(saveButton.dataset.save);
+  if (removeButton) toggleSaved(removeButton.dataset.remove);
 });
 
-document.querySelector("#randomButton").addEventListener("click", setRandomMeal);
+budgetInput.addEventListener("input", renderPlan);
+moodInput.addEventListener("change", renderPlan);
 
-document.querySelector("#checkoutButton").addEventListener("click", () => {
-  notice.textContent = cart.size ? "好，开饭。" : "先选一道菜。";
+document.querySelector("#suggestButton").addEventListener("click", suggestRoute);
+document.querySelector("#clearButton").addEventListener("click", () => {
+  saved.clear();
+  renderPlaces();
+  renderPlan();
 });
 
-[peopleInput, timeInput, tasteInput].forEach((input) => {
-  input.addEventListener("input", renderCart);
-  input.addEventListener("change", renderCart);
-});
-
-renderDishes();
-renderCart();
+renderPlaces();
+renderPlan();
