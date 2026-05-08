@@ -3,876 +3,123 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>今晚吃饭</title>
-  <style>
-    :root {
-      color-scheme: light;
-      --ink: #20201d;
-      --muted: #6f6b62;
-      --line: #e7dfd0;
-      --paper: #fffaf0;
-      --panel: #ffffff;
-      --sun: #f7b731;
-      --tomato: #d94a38;
-      --leaf: #237a57;
-      --teal: #166d78;
-      --shadow: 0 18px 45px rgba(54, 42, 22, .14);
-    }
-
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      margin: 0;
-      min-height: 100vh;
-      font-family: "Microsoft YaHei", "PingFang SC", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      color: var(--ink);
-      background:
-        radial-gradient(circle at top left, rgba(247, 183, 49, .22), transparent 34rem),
-        linear-gradient(135deg, #fff9ed 0%, #f7fbf7 48%, #eef7f9 100%);
-    }
-
-    button,
-    input {
-      font: inherit;
-    }
-
-    button {
-      cursor: pointer;
-    }
-
-    .shell {
-      width: min(1180px, calc(100% - 32px));
-      margin: 0 auto;
-      padding: 24px 0 36px;
-    }
-
-    .topbar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 18px;
-      margin-bottom: 18px;
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      min-width: 0;
-    }
-
-    .brand-mark {
-      display: grid;
-      width: 44px;
-      height: 44px;
-      place-items: center;
-      border-radius: 14px;
-      color: #fff;
-      background: linear-gradient(135deg, var(--tomato), var(--sun));
-      box-shadow: 0 12px 28px rgba(217, 74, 56, .22);
-    }
-
-    .brand-mark svg {
-      width: 25px;
-      height: 25px;
-      stroke-width: 2.1;
-    }
-
-    .brand h1 {
-      margin: 0;
-      font-size: clamp(1.35rem, 3vw, 2rem);
-      line-height: 1.1;
-    }
-
-    .brand p {
-      margin: 4px 0 0;
-      color: var(--muted);
-      font-size: .94rem;
-    }
-
-    .status-pill {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      min-height: 38px;
-      padding: 0 14px;
-      border: 1px solid rgba(35, 122, 87, .22);
-      border-radius: 999px;
-      color: var(--leaf);
-      background: rgba(255, 255, 255, .78);
-      white-space: nowrap;
-    }
-
-    .status-dot {
-      width: 9px;
-      height: 9px;
-      border-radius: 50%;
-      background: var(--leaf);
-      box-shadow: 0 0 0 5px rgba(35, 122, 87, .13);
-    }
-
-    .hero {
-      position: relative;
-      display: grid;
-      grid-template-columns: minmax(0, 1.1fr) minmax(280px, .9fr);
-      min-height: 328px;
-      overflow: hidden;
-      border-radius: 28px;
-      background:
-        linear-gradient(90deg, rgba(17, 20, 17, .78), rgba(17, 20, 17, .38) 52%, rgba(17, 20, 17, .1)),
-        url("https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=1600&q=80") center / cover;
-      box-shadow: var(--shadow);
-    }
-
-    .hero-copy {
-      align-self: end;
-      padding: clamp(28px, 5vw, 48px);
-      color: #fff;
-    }
-
-    .hero-copy h2 {
-      max-width: 680px;
-      margin: 0 0 12px;
-      font-size: clamp(2.45rem, 7vw, 5.4rem);
-      line-height: .94;
-      letter-spacing: 0;
-    }
-
-    .hero-copy p {
-      max-width: 540px;
-      margin: 0;
-      color: rgba(255, 255, 255, .86);
-      font-size: clamp(1rem, 2vw, 1.15rem);
-      line-height: 1.7;
-    }
-
-    .booking {
-      align-self: end;
-      margin: 24px;
-      padding: 18px;
-      border: 1px solid rgba(255, 255, 255, .28);
-      border-radius: 18px;
-      background: rgba(255, 255, 255, .88);
-      backdrop-filter: blur(16px);
-    }
-
-    .booking h3 {
-      margin: 0 0 14px;
-      font-size: 1.05rem;
-    }
-
-    .booking-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-    }
-
-    .field {
-      display: grid;
-      gap: 6px;
-    }
-
-    .field label {
-      color: var(--muted);
-      font-size: .78rem;
-    }
-
-    .field input {
-      width: 100%;
-      min-height: 42px;
-      border: 1px solid var(--line);
-      border-radius: 12px;
-      padding: 0 12px;
-      color: var(--ink);
-      background: #fff;
-    }
-
-    .booking button {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      width: 100%;
-      min-height: 44px;
-      margin-top: 12px;
-      border: 0;
-      border-radius: 12px;
-      color: #fff;
-      background: var(--tomato);
-      box-shadow: 0 12px 24px rgba(217, 74, 56, .24);
-    }
-
-    .booking button svg {
-      width: 19px;
-      height: 19px;
-    }
-
-    .layout {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) 340px;
-      gap: 18px;
-      margin-top: 18px;
-      align-items: start;
-    }
-
-    .section {
-      padding: 20px;
-      border: 1px solid rgba(231, 223, 208, .9);
-      border-radius: 24px;
-      background: rgba(255, 255, 255, .78);
-      box-shadow: 0 14px 35px rgba(54, 42, 22, .08);
-    }
-
-    .section-head {
-      display: flex;
-      align-items: end;
-      justify-content: space-between;
-      gap: 12px;
-      margin-bottom: 16px;
-    }
-
-    .section-head h2 {
-      margin: 0;
-      font-size: 1.3rem;
-    }
-
-    .section-head p {
-      margin: 4px 0 0;
-      color: var(--muted);
-      line-height: 1.5;
-    }
-
-    .tabs {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-
-    .tab {
-      min-height: 36px;
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      padding: 0 13px;
-      color: var(--muted);
-      background: #fff;
-    }
-
-    .tab.is-active {
-      border-color: rgba(22, 109, 120, .24);
-      color: #fff;
-      background: var(--teal);
-    }
-
-    .menu-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 12px;
-    }
-
-    .dish {
-      display: grid;
-      min-height: 292px;
-      overflow: hidden;
-      border: 1px solid var(--line);
-      border-radius: 18px;
-      background: var(--panel);
-    }
-
-    .dish-photo {
-      position: relative;
-      min-height: 132px;
-      background: var(--photo) center / cover;
-    }
-
-    .dish-photo::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(180deg, transparent 44%, rgba(0, 0, 0, .5));
-    }
-
-    .dish-tag {
-      position: absolute;
-      left: 12px;
-      bottom: 10px;
-      z-index: 1;
-      display: inline-flex;
-      align-items: center;
-      min-height: 26px;
-      padding: 0 9px;
-      border-radius: 999px;
-      color: #fff;
-      background: rgba(0, 0, 0, .42);
-      font-size: .78rem;
-    }
-
-    .dish-body {
-      display: grid;
-      gap: 10px;
-      padding: 14px;
-    }
-
-    .dish-title {
-      display: flex;
-      align-items: start;
-      justify-content: space-between;
-      gap: 8px;
-    }
-
-    .dish-title h3 {
-      margin: 0;
-      font-size: 1.02rem;
-      line-height: 1.35;
-    }
-
-    .price {
-      color: var(--tomato);
-      font-weight: 800;
-      white-space: nowrap;
-    }
-
-    .dish p {
-      min-height: 42px;
-      margin: 0;
-      color: var(--muted);
-      font-size: .9rem;
-      line-height: 1.55;
-    }
-
-    .dish-actions {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 8px;
-      margin-top: auto;
-    }
-
-    .meta {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      color: var(--muted);
-      font-size: .84rem;
-    }
-
-    .meta svg,
-    .icon-button svg,
-    .summary-item svg {
-      width: 18px;
-      height: 18px;
-      stroke-width: 2;
-    }
-
-    .icon-button {
-      display: inline-grid;
-      width: 40px;
-      height: 40px;
-      place-items: center;
-      border: 0;
-      border-radius: 50%;
-      color: #fff;
-      background: var(--leaf);
-      transition: transform .18s ease, background .18s ease;
-    }
-
-    .icon-button:hover {
-      transform: translateY(-2px);
-      background: #1d684b;
-    }
-
-    .order {
-      position: sticky;
-      top: 18px;
-    }
-
-    .summary-list {
-      display: grid;
-      gap: 10px;
-      margin: 0 0 16px;
-    }
-
-    .summary-item {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      padding: 12px;
-      border-radius: 16px;
-      background: #f8f2e7;
-    }
-
-    .summary-item span {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      color: var(--muted);
-      font-size: .92rem;
-    }
-
-    .order-list {
-      display: grid;
-      gap: 10px;
-      min-height: 150px;
-    }
-
-    .empty {
-      display: grid;
-      min-height: 150px;
-      place-items: center;
-      border: 1px dashed #dbcdb9;
-      border-radius: 18px;
-      color: var(--muted);
-      text-align: center;
-      padding: 22px;
-      background: #fffcf6;
-    }
-
-    .cart-row {
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 10px;
-      align-items: center;
-      padding: 11px 0;
-      border-bottom: 1px solid var(--line);
-    }
-
-    .cart-row strong {
-      display: block;
-      margin-bottom: 3px;
-    }
-
-    .cart-row small {
-      color: var(--muted);
-    }
-
-    .qty {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      min-width: 88px;
-      justify-content: end;
-    }
-
-    .qty button {
-      display: grid;
-      width: 28px;
-      height: 28px;
-      place-items: center;
-      border: 1px solid var(--line);
-      border-radius: 50%;
-      background: #fff;
-    }
-
-    .total {
-      display: flex;
-      align-items: baseline;
-      justify-content: space-between;
-      gap: 12px;
-      margin-top: 16px;
-      padding-top: 16px;
-      border-top: 1px solid var(--line);
-    }
-
-    .total span {
-      color: var(--muted);
-    }
-
-    .total strong {
-      color: var(--tomato);
-      font-size: 1.7rem;
-    }
-
-    .checkout {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      width: 100%;
-      min-height: 48px;
-      margin-top: 14px;
-      border: 0;
-      border-radius: 14px;
-      color: #fff;
-      background: var(--ink);
-    }
-
-    .checkout svg {
-      width: 18px;
-      height: 18px;
-    }
-
-    .notice {
-      min-height: 22px;
-      margin: 12px 0 0;
-      color: var(--leaf);
-      font-size: .92rem;
-      text-align: center;
-    }
-
-    @media (max-width: 980px) {
-      .hero,
-      .layout {
-        grid-template-columns: 1fr;
-      }
-
-      .booking {
-        align-self: stretch;
-      }
-
-      .menu-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-
-      .order {
-        position: static;
-      }
-    }
-
-    @media (max-width: 680px) {
-      .shell {
-        width: min(100% - 20px, 1180px);
-        padding-top: 14px;
-      }
-
-      .topbar,
-      .section-head {
-        align-items: start;
-        flex-direction: column;
-      }
-
-      .status-pill {
-        white-space: normal;
-      }
-
-      .hero {
-        min-height: auto;
-        border-radius: 20px;
-        background-position: center;
-      }
-
-      .hero-copy {
-        padding: 120px 22px 22px;
-      }
-
-      .booking {
-        margin: 0 12px 12px;
-      }
-
-      .booking-grid,
-      .menu-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .section {
-        padding: 16px;
-        border-radius: 18px;
-      }
-    }
-  </style>
+  <title>今晚吃什么</title>
+  <link rel="stylesheet" href="./styles.css">
 </head>
 <body>
-  <main class="shell">
+  <main class="app">
     <header class="topbar">
-      <div class="brand">
-        <div class="brand-mark" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M4 3v8"></path><path d="M8 3v8"></path><path d="M6 3v18"></path><path d="M14 3v7a4 4 0 0 0 4 4h2"></path><path d="M18 14v7"></path>
+      <a class="brand" href="#" aria-label="今晚吃什么首页">
+        <span class="brand-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M4 3v8M8 3v8M6 3v18M14 3v7a4 4 0 0 0 4 4h2M18 14v7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
-        </div>
-        <div>
-          <h1>今晚吃饭</h1>
-          <p>点几个热乎的菜，把晚餐安排得明明白白。</p>
-        </div>
-      </div>
-      <div class="status-pill">
-        <span class="status-dot" aria-hidden="true"></span>
-        今日 17:30 后可送达
+        </span>
+        <span>
+          <strong>今晚吃什么</strong>
+          <small>家庭晚餐点单</small>
+        </span>
+      </a>
+
+      <div class="top-actions">
+        <button class="ghost-button" id="randomButton" type="button">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M16 3h5v5M4 20 21 3M21 16v5h-5M15 15l6 6M4 4l5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          随机配餐
+        </button>
       </div>
     </header>
 
-    <section class="hero" aria-label="晚餐预订">
-      <div class="hero-copy">
-        <h2>开饭时间到了</h2>
-        <p>选菜、凑单、看预算，一页完成。适合下班后的两人餐，也适合朋友来家里随手加菜。</p>
+    <section class="hero">
+      <div class="hero-content">
+        <p class="eyebrow">DINNER IS READY</p>
+        <h1>今晚，吃点认真做的饭。</h1>
+        <p class="hero-copy">从热菜、轻食到主食，一页选好晚餐组合，预算和人数自动算清楚。</p>
       </div>
-      <form class="booking" id="bookingForm">
-        <h3>今晚安排</h3>
-        <div class="booking-grid">
-          <div class="field">
-            <label for="people">人数</label>
-            <input id="people" type="number" min="1" max="12" value="2">
-          </div>
-          <div class="field">
-            <label for="time">开饭时间</label>
-            <input id="time" type="time" value="19:00">
-          </div>
-        </div>
-        <button type="submit">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M20 6 9 17l-5-5"></path>
-          </svg>
-          锁定饭局
-        </button>
+
+      <form class="meal-panel" id="mealForm">
+        <label>
+          <span>用餐人数</span>
+          <input id="peopleInput" type="number" min="1" max="12" value="2">
+        </label>
+        <label>
+          <span>开饭时间</span>
+          <input id="timeInput" type="time" value="19:00">
+        </label>
+        <label>
+          <span>口味偏好</span>
+          <select id="tasteInput">
+            <option value="balanced">均衡</option>
+            <option value="spicy">想吃辣</option>
+            <option value="light">清淡点</option>
+            <option value="protein">多点肉</option>
+          </select>
+        </label>
       </form>
     </section>
 
-    <div class="layout">
-      <section class="section">
-        <div class="section-head">
+    <section class="stats" aria-label="晚餐概览">
+      <article>
+        <span>已选菜品</span>
+        <strong id="dishCount">0</strong>
+      </article>
+      <article>
+        <span>预计制作</span>
+        <strong id="cookTime">0 分钟</strong>
+      </article>
+      <article>
+        <span>人均预算</span>
+        <strong id="perPerson">￥0</strong>
+      </article>
+    </section>
+
+    <div class="workspace">
+      <section class="menu-section">
+        <div class="section-heading">
           <div>
+            <p class="eyebrow">MENU</p>
             <h2>今晚菜单</h2>
-            <p>按口味快速筛选，喜欢就加到右侧饭桌。</p>
           </div>
-          <div class="tabs" role="tablist" aria-label="菜单分类">
-            <button class="tab is-active" type="button" data-filter="all">全部</button>
-            <button class="tab" type="button" data-filter="hot">热菜</button>
-            <button class="tab" type="button" data-filter="light">清爽</button>
-            <button class="tab" type="button" data-filter="main">主食</button>
+          <div class="filters" aria-label="菜品筛选">
+            <button class="filter is-active" type="button" data-filter="all">全部</button>
+            <button class="filter" type="button" data-filter="hot">热菜</button>
+            <button class="filter" type="button" data-filter="fresh">清爽</button>
+            <button class="filter" type="button" data-filter="main">主食</button>
           </div>
         </div>
-        <div class="menu-grid" id="menuGrid"></div>
+
+        <div class="dish-grid" id="dishGrid"></div>
       </section>
 
-      <aside class="section order" aria-label="已选饭菜">
-        <div class="section-head">
+      <aside class="cart">
+        <div class="section-heading">
           <div>
-            <h2>饭桌</h2>
-            <p id="mealMeta">2 人 · 19:00 开饭</p>
+            <p class="eyebrow">TABLE</p>
+            <h2>我的饭桌</h2>
           </div>
         </div>
-        <div class="summary-list">
-          <div class="summary-item">
-            <span>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path>
-              </svg>
-              预计制作
-            </span>
-            <strong id="cookTime">0 分钟</strong>
-          </div>
-          <div class="summary-item">
-            <span>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <path d="M12 2v20"></path><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7H14a3.5 3.5 0 0 1 0 7H6"></path>
-              </svg>
-              人均预算
-            </span>
-            <strong id="perPerson">￥0</strong>
-          </div>
-        </div>
-        <div class="order-list" id="orderList">
-          <div class="empty">先从左边挑几道菜，饭桌就热闹起来了。</div>
-        </div>
-        <div class="total">
+
+        <div class="cart-meta" id="cartMeta">2 人 · 19:00 开饭 · 均衡</div>
+        <div class="cart-list" id="cartList"></div>
+
+        <div class="cart-total">
           <span>合计</span>
           <strong id="totalPrice">￥0</strong>
         </div>
-        <button class="checkout" id="checkout" type="button">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path>
+
+        <button class="primary-button" id="checkoutButton" type="button">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M5 12h14M13 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
-          去开饭
+          开饭
         </button>
+
         <p class="notice" id="notice" aria-live="polite"></p>
       </aside>
     </div>
   </main>
 
-  <script>
-    const dishes = [
-      {
-        id: "beef",
-        name: "黑椒牛肉粒",
-        category: "hot",
-        tag: "下饭热菜",
-        desc: "牛肉煎到焦香，配彩椒和洋葱，适合米饭党。",
-        price: 58,
-        minutes: 18,
-        photo: "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=900&q=80"
-      },
-      {
-        id: "fish",
-        name: "番茄酸汤鱼",
-        category: "hot",
-        tag: "暖胃",
-        desc: "酸甜汤底配嫩鱼片，天气微凉时很会哄人。",
-        price: 66,
-        minutes: 22,
-        photo: "https://images.unsplash.com/photo-1569058242253-92a9c755a0ec?auto=format&fit=crop&w=900&q=80"
-      },
-      {
-        id: "salad",
-        name: "青柠虾仁沙拉",
-        category: "light",
-        tag: "清爽",
-        desc: "虾仁、牛油果、青柠汁，给晚餐留一点轻盈。",
-        price: 42,
-        minutes: 12,
-        photo: "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=900&q=80"
-      },
-      {
-        id: "noodle",
-        name: "葱油拌面",
-        category: "main",
-        tag: "主食",
-        desc: "葱香酱汁裹住细面，简单但很难不加第二份。",
-        price: 24,
-        minutes: 10,
-        photo: "https://images.unsplash.com/photo-1552611052-33e04de081de?auto=format&fit=crop&w=900&q=80"
-      },
-      {
-        id: "tofu",
-        name: "家常豆腐煲",
-        category: "hot",
-        tag: "素也满足",
-        desc: "外焦里嫩的豆腐吸满酱汁，和米饭很合拍。",
-        price: 36,
-        minutes: 15,
-        photo: "https://images.unsplash.com/photo-1512058564366-18510be2db19?auto=format&fit=crop&w=900&q=80"
-      },
-      {
-        id: "rice",
-        name: "菌菇鸡肉焖饭",
-        category: "main",
-        tag: "一锅香",
-        desc: "米粒吸进鸡肉和菌菇的香气，适合凑一份主食。",
-        price: 32,
-        minutes: 20,
-        photo: "https://images.unsplash.com/photo-1516684669134-de6f7c473a2a?auto=format&fit=crop&w=900&q=80"
-      }
-    ];
-
-    const cart = new Map();
-    let currentFilter = "all";
-
-    const menuGrid = document.querySelector("#menuGrid");
-    const orderList = document.querySelector("#orderList");
-    const totalPrice = document.querySelector("#totalPrice");
-    const perPerson = document.querySelector("#perPerson");
-    const cookTime = document.querySelector("#cookTime");
-    const notice = document.querySelector("#notice");
-    const peopleInput = document.querySelector("#people");
-    const timeInput = document.querySelector("#time");
-    const mealMeta = document.querySelector("#mealMeta");
-
-    function currency(value) {
-      return `￥${value.toFixed(0)}`;
-    }
-
-    function renderMenu() {
-      const visibleDishes = currentFilter === "all"
-        ? dishes
-        : dishes.filter((dish) => dish.category === currentFilter);
-
-      menuGrid.innerHTML = visibleDishes.map((dish) => `
-        <article class="dish">
-          <div class="dish-photo" style="--photo: url('${dish.photo}')">
-            <span class="dish-tag">${dish.tag}</span>
-          </div>
-          <div class="dish-body">
-            <div class="dish-title">
-              <h3>${dish.name}</h3>
-              <span class="price">${currency(dish.price)}</span>
-            </div>
-            <p>${dish.desc}</p>
-            <div class="dish-actions">
-              <span class="meta">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                  <circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path>
-                </svg>
-                ${dish.minutes} 分钟
-              </span>
-              <button class="icon-button" type="button" aria-label="添加 ${dish.name}" title="添加 ${dish.name}" data-add="${dish.id}">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                  <path d="M12 5v14"></path><path d="M5 12h14"></path>
-                </svg>
-              </button>
-            </div>
-          </div>
-        </article>
-      `).join("");
-    }
-
-    function renderCart() {
-      const rows = [...cart.values()];
-      const total = rows.reduce((sum, item) => sum + item.price * item.qty, 0);
-      const minutes = rows.reduce((sum, item) => sum + item.minutes * item.qty, 0);
-      const people = Math.max(1, Number(peopleInput.value) || 1);
-
-      orderList.innerHTML = rows.length
-        ? rows.map((item) => `
-          <div class="cart-row">
-            <div>
-              <strong>${item.name}</strong>
-              <small>${currency(item.price)} · ${item.minutes} 分钟</small>
-            </div>
-            <div class="qty">
-              <button type="button" aria-label="减少 ${item.name}" data-minus="${item.id}">-</button>
-              <span>${item.qty}</span>
-              <button type="button" aria-label="增加 ${item.name}" data-add="${item.id}">+</button>
-            </div>
-          </div>
-        `).join("")
-        : `<div class="empty">先从左边挑几道菜，饭桌就热闹起来了。</div>`;
-
-      totalPrice.textContent = currency(total);
-      perPerson.textContent = currency(total / people);
-      cookTime.textContent = `${Math.max(...rows.map((item) => item.minutes), 0)} 分钟`;
-      notice.textContent = minutes > 70 ? "菜有点多，可以安排朋友早点到。" : "";
-      mealMeta.textContent = `${people} 人 · ${timeInput.value || "19:00"} 开饭`;
-    }
-
-    function addDish(id) {
-      const dish = dishes.find((item) => item.id === id);
-      if (!dish) return;
-      const current = cart.get(id);
-      cart.set(id, { ...dish, qty: current ? current.qty + 1 : 1 });
-      renderCart();
-    }
-
-    function removeDish(id) {
-      const current = cart.get(id);
-      if (!current) return;
-      if (current.qty <= 1) {
-        cart.delete(id);
-      } else {
-        cart.set(id, { ...current, qty: current.qty - 1 });
-      }
-      renderCart();
-    }
-
-    document.querySelector(".tabs").addEventListener("click", (event) => {
-      const button = event.target.closest("[data-filter]");
-      if (!button) return;
-      currentFilter = button.dataset.filter;
-      document.querySelectorAll(".tab").forEach((tab) => tab.classList.toggle("is-active", tab === button));
-      renderMenu();
-    });
-
-    document.addEventListener("click", (event) => {
-      const addButton = event.target.closest("[data-add]");
-      const minusButton = event.target.closest("[data-minus]");
-      if (addButton) addDish(addButton.dataset.add);
-      if (minusButton) removeDish(minusButton.dataset.minus);
-    });
-
-    document.querySelector("#bookingForm").addEventListener("submit", (event) => {
-      event.preventDefault();
-      renderCart();
-      notice.textContent = "饭局已锁定，先去洗手。";
-    });
-
-    document.querySelector("#checkout").addEventListener("click", () => {
-      notice.textContent = cart.size ? "好，开饭！" : "先选几道菜再开饭。";
-    });
-
-    peopleInput.addEventListener("input", renderCart);
-    timeInput.addEventListener("input", renderCart);
-
-    renderMenu();
-    renderCart();
-  </script>
+  <script src="./app.js"></script>
 </body>
 </html>
